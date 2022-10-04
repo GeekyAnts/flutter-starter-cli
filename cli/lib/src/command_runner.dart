@@ -28,6 +28,7 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
         help: 'Noisy logging, including all shell commands executed.',
       );
 
+    addCommand(CreateCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 
