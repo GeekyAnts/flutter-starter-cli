@@ -1,0 +1,4 @@
+enum APIService {
+  dio,
+  http,
+}

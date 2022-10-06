@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:flutter_starter_cli/src/cli.dart';
+import 'package:flutter_starter_cli/src/command_runner.dart';
+import 'package:flutter_starter_cli/src/utils.dart';
 import 'package:mason/mason.dart';
 
 class CreateCommand extends Command<int> {
@@ -17,6 +20,13 @@ class CreateCommand extends Command<int> {
         'org',
         help: 'The organization for the project.',
         defaultsTo: 'com.example',
+      )
+      ..addOption(
+        'api',
+        abbr: 'a',
+        help: 'The API service for the project.',
+        defaultsTo: APIService.dio.name,
+        allowed: [APIService.dio.name, APIService.http.name],
       );
   }
 
@@ -29,6 +39,9 @@ class CreateCommand extends Command<int> {
   String get name => 'create';
 
   @override
+  String get invocation => '$executableName $name <project_name>';
+
+  @override
   Future<int> run() async {
     final brick = Brick.git(
       const GitPath(
@@ -36,10 +49,12 @@ class CreateCommand extends Command<int> {
         path: 'bricks/flutter_starter',
       ),
     );
-    final target = DirectoryGeneratorTarget(Directory.current);
+    final dir = Directory.current;
+    final target = DirectoryGeneratorTarget(dir);
     final name = _name;
-    final desc = argResults!['desc'] as String? ?? '';
-    final org = argResults!['org'] as String? ?? 'com.example$name';
+    final desc = argResults!['desc'];
+    final org = argResults!['org'];
+    final api = argResults!['api'];
     final generateProgress = _logger.progress('Project Creating...');
     final generator = await MasonGenerator.fromBrick(brick);
     final fileCount = await generator.generate(
@@ -49,8 +64,10 @@ class CreateCommand extends Command<int> {
         'name': name,
         'desc': desc,
         'org': org,
+        'api': api,
       },
     );
+    await onGenerateComplete(_logger, '${Directory.current.path}/$name', api);
     generateProgress
         .complete('Project Created with ${fileCount.length} Files!');
     return ExitCode.success.code;
@@ -65,5 +82,20 @@ class CreateCommand extends Command<int> {
       usageException('Please provide valid project name');
     }
     return args.first;
+  }
+
+  Future<void> onGenerateComplete(
+    Logger logger,
+    String path,
+    String api,
+  ) async {
+    await Cli.removeFiles(
+      path: path,
+      api: api,
+    );
+    await Cli.pubGet(
+      path: path,
+      api: api,
+    );
   }
 }
