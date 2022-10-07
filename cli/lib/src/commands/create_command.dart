@@ -25,8 +25,13 @@ class CreateCommand extends Command<int> {
         'api',
         abbr: 'a',
         help: 'The API service for the project.',
-        defaultsTo: APIService.dio.name,
         allowed: [APIService.dio.name, APIService.http.name],
+      )
+      ..addFlag(
+        'git',
+        abbr: 'g',
+        help: 'Initialize Git Repository.',
+        defaultsTo: null,
       );
   }
 
@@ -43,6 +48,7 @@ class CreateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
+    Status.init(_logger);
     final brick = Brick.git(
       const GitPath(
         'https://git.geekyants.com/ruchika/flutter-starter-cli',
@@ -52,10 +58,11 @@ class CreateCommand extends Command<int> {
     final dir = Directory.current;
     final target = DirectoryGeneratorTarget(dir);
     final name = _name;
-    final desc = argResults!['desc'];
-    final org = argResults!['org'];
-    final api = argResults!['api'];
-    final generateProgress = _logger.progress('Project Creating...');
+    final desc = _desc;
+    final org = _org;
+    final api = _api;
+    final git = _git;
+    Status.start('Project Creating...');
     final generator = await MasonGenerator.fromBrick(brick);
     final fileCount = await generator.generate(
       target,
@@ -67,35 +74,89 @@ class CreateCommand extends Command<int> {
         'api': api,
       },
     );
-    await onGenerateComplete(_logger, '${Directory.current.path}/$name', api);
-    generateProgress
-        .complete('Project Created with ${fileCount.length} Files!');
+    Status.end('Project Created with ${fileCount.length} Files!!!');
+    await onGenerateComplete(
+        _logger, '${Directory.current.path}/$name', api, git);
+    _logger.success('Your Project is Ready to Use 🚀');
     return ExitCode.success.code;
   }
 
   String get _name {
     final args = argResults!.rest;
     if (args.isEmpty) {
-      usageException('Please provide project name');
-    }
-    if (args.length > 1) {
-      usageException('Please provide valid project name');
+      return _logger.prompt(
+        'Name of the Project?',
+        defaultValue: 'counter',
+      );
     }
     return args.first;
+  }
+
+  String get _api {
+    return argResults?['api'] ??
+        _logger.chooseOne(
+          'Select the API Service',
+          choices: [APIService.dio.name, APIService.http.name],
+          defaultValue: APIService.dio.name,
+        );
+  }
+
+  String get _desc {
+    return argResults?['desc'] ??
+        _logger.prompt(
+          'Please Enter the Description',
+          defaultValue: 'A New Flutter Project.',
+        );
+  }
+
+  String get _org {
+    return argResults?['org'] ??
+        _logger.prompt(
+          'Please Enter the Organization',
+          defaultValue: 'com.example',
+        );
+  }
+
+  bool get _git {
+    return argResults?['git'] ??
+        _logger.confirm(
+          'Initialize Git Repository?',
+          defaultValue: false,
+        );
   }
 
   Future<void> onGenerateComplete(
     Logger logger,
     String path,
     String api,
+    bool git,
   ) async {
+    Status.start('Running Basic Setup...');
     await Cli.removeFiles(
       path: path,
       api: api,
     );
-    await Cli.pubGet(
+    Status.end('Basic Setup Completed!!!');
+
+    Status.start('Adding dependencies...');
+    await Cli.addPub(
       path: path,
       api: api,
     );
+    Status.end('Dependencies Added!!!');
+
+    Status.start('Running Pub Get...');
+    await Cli.pubGet(
+      path: path,
+    );
+    Status.end('Pub Get Completed!!!');
+
+    if (git) {
+      Status.start('Initialize Git...');
+      await Cli.gitInit(
+        path: path,
+      );
+      Status.end('Git Initialized!!!');
+    }
   }
 }

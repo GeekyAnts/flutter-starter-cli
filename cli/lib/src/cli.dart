@@ -7,12 +7,16 @@ class Cli {
   }) async {
     await Process.run(
       'rm',
-      ['-rf', 'lib/api_sdk/${api == "http" ? "dio" : "http"}'],
+      [
+        '-rf',
+        'lib/api_sdk/${api == "http" ? "dio" : "http"}',
+        'lib/api_sdk/${api == "http" ? "dio" : "http"}_api_sdk.dart',
+      ],
       workingDirectory: path,
     );
   }
 
-  static Future<void> pubGet({
+  static Future<void> addPub({
     String path = '.',
     String api = 'dio',
   }) async {
@@ -29,9 +33,24 @@ class Cli {
         workingDirectory: path,
       );
     }
+  }
+
+  static Future<void> pubGet({
+    String path = '.',
+  }) async {
     await Process.run(
       'flutter',
       ['pub', 'get'],
+      workingDirectory: path,
+    );
+  }
+
+  static Future<void> gitInit({
+    String path = '.',
+  }) async {
+    await Process.run(
+      'git',
+      ['init'],
       workingDirectory: path,
     );
   }
