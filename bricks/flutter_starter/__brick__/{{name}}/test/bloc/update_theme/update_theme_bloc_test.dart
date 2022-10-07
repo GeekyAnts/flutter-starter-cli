@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:{{name}}/{{name}}.dart';
+import 'package:{{name}}/common_export.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

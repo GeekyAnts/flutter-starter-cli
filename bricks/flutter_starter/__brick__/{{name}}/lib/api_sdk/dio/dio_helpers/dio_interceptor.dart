@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:{{name}}/{{name}}.dart';
+
+import 'dio_exceptions.dart';
 
 class DioInterceptor extends Interceptor {
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:{{name}}/{{name}}.dart';
+
+import '../common_export.dart';
 
 /// [SizeConfig] to make project scalable
 class UiSizeConfig {

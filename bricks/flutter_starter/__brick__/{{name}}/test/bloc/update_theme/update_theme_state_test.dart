@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:{{name}}/{{name}}.dart';
+import 'package:{{name}}/common_export.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
