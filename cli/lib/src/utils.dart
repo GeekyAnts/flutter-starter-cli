@@ -1,4 +1,4 @@
-import 'package:mason_logger/mason_logger.dart';
+import 'package:mason/mason.dart';
 
 enum APIService {
   dio,
@@ -13,5 +13,7 @@ class Status {
 
   static start(String message) => progress = logger.progress(message);
 
-  static end(String message) => progress.complete(message);
+  static complete(String message) => progress.complete(message);
+
+  static fail(String message) => progress.fail(message);
 }

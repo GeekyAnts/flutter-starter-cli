@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:flutter_starter_cli/src/cli.dart';
+import 'package:mason/mason.dart';
+
+import 'package:flutter_starter_cli/src/cli/actions.dart';
 import 'package:flutter_starter_cli/src/command_runner.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
-import 'package:mason/mason.dart';
 
 class CreateCommand extends Command<int> {
   CreateCommand({
@@ -48,13 +49,14 @@ class CreateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    Status.init(_logger);
-    final brick = Brick.git(
-      const GitPath(
-        'https://git.geekyants.com/ruchika/flutter-starter-cli',
-        path: 'bricks/flutter_starter',
-      ),
-    );
+    final brick = Brick.path(
+        '/Users/jeevanchandrajoshi/Code/Projects/flutter-starter-cli/bricks/flutter_starter');
+    // final brick = Brick.git(
+    //   const GitPath(
+    //     'https://git.geekyants.com/ruchika/flutter-starter-cli',
+    //     path: 'bricks/flutter_starter',
+    //   ),
+    // );
     final dir = Directory.current;
     final target = DirectoryGeneratorTarget(dir);
     final name = _name;
@@ -74,7 +76,7 @@ class CreateCommand extends Command<int> {
         'api': api,
       },
     );
-    Status.end('Project Created with ${fileCount.length} Files!!!');
+    Status.complete('Project Created with ${fileCount.length} Files!!!');
     await onGenerateComplete(
         _logger, '${Directory.current.path}/$name', api, git);
     _logger.success('Your Project is Ready to Use 🚀');
@@ -131,32 +133,9 @@ class CreateCommand extends Command<int> {
     String api,
     bool git,
   ) async {
-    Status.start('Running Basic Setup...');
-    await Cli.removeFiles(
-      path: path,
-      api: api,
-    );
-    Status.end('Basic Setup Completed!!!');
-
-    Status.start('Adding dependencies...');
-    await Cli.addPub(
-      path: path,
-      api: api,
-    );
-    Status.end('Dependencies Added!!!');
-
-    Status.start('Running Pub Get...');
-    await Cli.pubGet(
-      path: path,
-    );
-    Status.end('Pub Get Completed!!!');
-
-    if (git) {
-      Status.start('Initialize Git...');
-      await Cli.gitInit(
-        path: path,
-      );
-      Status.end('Git Initialized!!!');
-    }
+    await Actions.setupFiles(path, api);
+    await Actions.addPackages(path, api);
+    await Actions.getPackages(path);
+    if (git) await Actions.initializeGit(path);
   }
 }

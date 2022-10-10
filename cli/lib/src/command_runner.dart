@@ -1,9 +1,11 @@
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
-import 'package:mason_logger/mason_logger.dart';
-import 'package:flutter_starter_cli/src/commands/commands.dart';
-import 'package:flutter_starter_cli/src/version.dart';
+import 'package:mason/mason.dart';
 import 'package:pub_updater/pub_updater.dart';
+
+import 'package:flutter_starter_cli/src/commands/commands.dart';
+import 'package:flutter_starter_cli/src/utils.dart';
+import 'package:flutter_starter_cli/src/version.dart' as ver;
 
 const executableName = 'flutter_starter_cli';
 const packageName = 'flutter_starter_cli';
@@ -37,6 +39,7 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
 
   @override
   Future<int> run(Iterable<String> args) async {
+    Status.init(_logger);
     try {
       final topLevelResults = parse(args);
       if (topLevelResults['verbose'] == true) {
@@ -83,7 +86,7 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
 
     final int? exitCode;
     if (topLevelResults['version'] == true) {
-      _logger.info(packageVersion);
+      _logger.info(ver.packageVersion);
       exitCode = ExitCode.success.code;
     } else {
       exitCode = await super.runCommand(topLevelResults);
@@ -95,13 +98,13 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
   Future<void> _checkForUpdates() async {
     try {
       final latestVersion = await _pubUpdater.getLatestVersion(packageName);
-      final isUpToDate = packageVersion == latestVersion;
+      final isUpToDate = ver.packageVersion == latestVersion;
       if (!isUpToDate) {
         _logger
           ..info('')
           ..info(
             '''
-${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
+${lightYellow.wrap('Update available!')} ${lightCyan.wrap(ver.packageVersion)} \u2192 ${lightCyan.wrap(latestVersion)}
 Run ${lightCyan.wrap('flutter_starter_cli update')} to update''',
           );
       }
