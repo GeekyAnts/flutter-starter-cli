@@ -15,42 +15,48 @@ class Cli {
     return result;
   }
 
-  static Future<void> removeDioFiles(String path) async {
+  static Future<void> removeFiles(String path, String api, bool test) async {
+    var args = [];
+    if (api == 'dio') {
+      args
+        ..add('lib/api_sdk/http')
+        ..add('lib/api_sdk/http_api_sdk.dart');
+    } else {
+      args
+        ..add('lib/api_sdk/dio')
+        ..add('lib/api_sdk/dio_api_sdk.dart');
+    }
+    if (!test) {
+      args
+        ..add('integration_test')
+        ..add('test');
+    }
     await _run(
       'rm',
-      [
-        '-rf',
-        'lib/api_sdk/dio',
-        'lib/api_sdk/dio_api_sdk.dart',
-      ],
+      ['-rf', ...args],
       path: path,
     );
   }
 
-  static Future<void> removeHttpFiles(String path) async {
-    await _run(
-      'rm',
-      [
-        '-rf',
-        'lib/api_sdk/http',
-        'lib/api_sdk/http_api_sdk.dart',
-      ],
-      path: path,
-    );
-  }
-
-  static Future<void> removeDioPackage(String path) async {
-    await _run(
-      'flutter',
-      ['pub', 'remove', 'dio', 'retrofit'],
-      path: path,
-    );
-  }
-
-  static Future<void> removeHttpPackage(String path) async {
+  static Future<void> removePackages(String path, String api, bool test) async {
+    var args = [];
+    if (api == 'dio') {
+      args
+        ..add('http')
+        ..add('http_interceptor');
+    } else {
+      args
+        ..add('dio')
+        ..add('retrofit');
+    }
+    if (!test) {
+      args
+        ..add('bloc_test')
+        ..add('mocktail');
+    }
     await _run(
       'flutter',
-      ['pub', 'remove', 'http', 'http_interceptor'],
+      ['pub', 'remove', ...args],
       path: path,
     );
   }

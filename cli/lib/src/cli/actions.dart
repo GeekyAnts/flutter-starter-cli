@@ -2,41 +2,23 @@ import 'package:flutter_starter_cli/src/cli/cli.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
 
 class Actions {
-  static Future<void> setupFiles(String path, String api) async {
+  static Future<void> setupFiles(String path, String api, bool test) async {
     Status.start('Running Basic Setup...');
-    if (api == 'dio') {
-      try {
-        await Cli.removeHttpFiles(path);
-        Status.complete('Basic Setup Completed!!!');
-      } catch (_) {
-        Status.fail('Setup Failed.');
-      }
-    } else {
-      try {
-        await Cli.removeDioFiles(path);
-        Status.complete('Basic Setup Completed!!!');
-      } catch (_) {
-        Status.fail('Setup Failed.');
-      }
+    try {
+      await Cli.removeFiles(path, api, test);
+      Status.complete('Basic Setup Completed!!!');
+    } catch (_) {
+      Status.fail('Setup Failed.');
     }
   }
 
-  static Future<void> addPackages(String path, String api) async {
+  static Future<void> setupPackages(String path, String api, bool test) async {
     Status.start('Adding Dependencies...');
-    if (api == 'dio') {
-      try {
-        await Cli.removeHttpPackage(path);
-        Status.complete('Dependencies Added!!!');
-      } catch (_) {
-        Status.fail('Pub Add Failed.');
-      }
-    } else {
-      try {
-        await Cli.removeDioPackage(path);
-        Status.complete('Dependencies Added!!!');
-      } catch (_) {
-        Status.fail('Pub Add Failed.');
-      }
+    try {
+      await Cli.removePackages(path, api, test);
+      Status.complete('Dependencies Added!!!');
+    } catch (_) {
+      Status.fail('Pub Add Failed.');
     }
   }
 

@@ -29,6 +29,12 @@ class CreateCommand extends Command<int> {
         allowed: [APIService.dio.name, APIService.http.name],
       )
       ..addFlag(
+        'test',
+        abbr: 't',
+        help: 'Setup Test Cases.',
+        defaultsTo: null,
+      )
+      ..addFlag(
         'git',
         abbr: 'g',
         help: 'Initialize Git Repository.',
@@ -49,20 +55,19 @@ class CreateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final brick = Brick.path(
-        '/Users/jeevanchandrajoshi/Code/Projects/flutter-starter-cli/bricks/flutter_starter');
-    // final brick = Brick.git(
-    //   const GitPath(
-    //     'https://git.geekyants.com/ruchika/flutter-starter-cli',
-    //     path: 'bricks/flutter_starter',
-    //   ),
-    // );
+    final brick = Brick.git(
+      const GitPath(
+        'https://git.geekyants.com/ruchika/flutter-starter-cli',
+        path: 'bricks/flutter_starter',
+      ),
+    );
     final dir = Directory.current;
     final target = DirectoryGeneratorTarget(dir);
     final name = _name;
     final desc = _desc;
     final org = _org;
     final api = _api;
+    final test = _test;
     final git = _git;
     Status.start('Project Creating...');
     final generator = await MasonGenerator.fromBrick(brick);
@@ -78,7 +83,12 @@ class CreateCommand extends Command<int> {
     );
     Status.complete('Project Created with ${fileCount.length} Files!!!');
     await onGenerateComplete(
-        _logger, '${Directory.current.path}/$name', api, git);
+      _logger,
+      '${Directory.current.path}/$name',
+      api,
+      test,
+      git,
+    );
     _logger.success('Your Project is Ready to Use 🚀');
     return ExitCode.success.code;
   }
@@ -119,6 +129,14 @@ class CreateCommand extends Command<int> {
         );
   }
 
+  bool get _test {
+    return argResults?['test'] ??
+        _logger.confirm(
+          'Whether Test Cases Required?',
+          defaultValue: true,
+        );
+  }
+
   bool get _git {
     return argResults?['git'] ??
         _logger.confirm(
@@ -131,10 +149,11 @@ class CreateCommand extends Command<int> {
     Logger logger,
     String path,
     String api,
+    bool test,
     bool git,
   ) async {
-    await Actions.setupFiles(path, api);
-    await Actions.addPackages(path, api);
+    await Actions.setupFiles(path, api, test);
+    await Actions.setupPackages(path, api, test);
     await Actions.getPackages(path);
     if (git) await Actions.initializeGit(path);
   }
