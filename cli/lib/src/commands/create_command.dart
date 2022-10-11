@@ -57,7 +57,7 @@ class CreateCommand extends Command<int> {
   Future<int> run() async {
     final brick = Brick.git(
       const GitPath(
-        'https://git.geekyants.com/ruchika/flutter-starter-cli',
+        'https://github.com/GeekyAnts/flutter-starter-cli',
         path: 'bricks/flutter_starter',
       ),
     );
