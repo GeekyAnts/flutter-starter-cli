@@ -8,9 +8,6 @@ The `Flutter Starter CLI` is a very useful tool that provides commands for the e
 While working with the Flutter projects we have to write the same repetitive code multiple times but using this CLI, we can create a Flutter template on the fly.\
 Also, the basic structure of all the tests in Flutter is the same. So this CLI also provides a basic starter pack for the Flutter test as well.
 
-`Flutter Starter CLI` under the hood uses mason to generate the project template.\
-Mason is an open-source tool that generates code from custom templates called bricks.
-
 Out of the box, `Flutter Starter CLI` includes:-
 
 - ✅ **State Management**
@@ -35,10 +32,9 @@ Currently, the `Flutter Starter CLI` depends on the following packages:-
 | Package       | Version | Description                                                                                                                  |
 | ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | args          | 2.3.1   | Parses raw command-line arguments into a set of options and values.                                                          |
-| mason         | 0.1.0   | A template generator which helps to generate files quickly and consistently.                                                 |
+| mason_logger  | 0.1.3   | Simple logging library for CLI requests.                                                                                     |
+| path          | 1.8.2   | The path package provides common operations for manipulating paths: joining, splitting, normalizing, etc.                    |
 | pub_updater   | 0.2.1   | A Dart package which enables checking whether packages are up to date and supports updating them.                            |
-| build_runner  | 2.0.0   | The build_runner package provides a concrete way of generating files using Dart code, outside of tools like pub.             |
-| build_version | 2.0.0   | Include the version of the package in the source code.                                                                       |
 | flutter_lints | 2.0.1   | This package contains a recommended set of lints for Flutter apps, packages, and plugins to encourage good coding practices. |
 
 ## Getting Started
@@ -74,7 +70,10 @@ $ flutter_starter_cli create
 # Shorthand to create project with git
 $ flutter_starter_cli create <project_name> --api=<api_service> -g
 
-# Shorthand to create project without git
+# Shorthand to create project with test
+$ flutter_starter_cli create <project_name> --api=<api_service> -t
+
+# Shorthand to create project without git and test
 $ flutter_starter_cli create <project_name> --api=<api_service>
 
 # Available API services (dio, http)
@@ -89,14 +88,15 @@ The complete usage of the create command with options and flags.
 Creates a new flutter starter project.
 
 Usage: flutter_starter_cli create <project_name>
--h, --help        Print this usage information.
-    --desc        The description for the project.
-                  (defaults to "A New Flutter Project.")
-    --org         The organization for the project.
-                  (defaults to "com.example")
--a, --api         The API service for the project.
-                  [dio, http]
--g, --[no-]git    Initialize Git Repository.
+-h, --help         Print this usage information.
+    --desc         The description for the project.
+                   (defaults to "A New Flutter Project.")
+    --org          The organization for the project.
+                   (defaults to "com.example")
+-a, --api          The API service for the project.
+                   [dio, http]
+-t, --[no-]test    Setup Test Cases.
+-g, --[no-]git     Initialize Git Repository.
 
 Run "flutter_starter_cli help" to see global options.
 ```
