@@ -39,10 +39,10 @@ Currently, the `Flutter Starter CLI` depends on the following packages:-
 
 ## Getting Started
 
-Firstly clone the project on your system then run the following command:
+Activate globally via:
 
 ```sh
-dart pub global activate --source=path <path_to_this_project>
+dart pub global activate flutter_starter_cli
 ```
 
 ## Usage

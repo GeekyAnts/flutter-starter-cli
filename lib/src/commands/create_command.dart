@@ -74,7 +74,7 @@ class CreateCommand extends Command<int> {
     if (args.isEmpty) {
       return _logger.prompt(
         'Name of the Project?',
-        defaultValue: 'counter',
+        defaultValue: 'flutter_starter',
       );
     }
     return args.first;
