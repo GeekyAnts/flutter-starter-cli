@@ -20,7 +20,14 @@ class Cli {
   static Future<void> cloneProject(String path) async {
     await _run(
       'git',
-      ['clone', 'https://github.com/Geekyants/flutter-starter.git', path],
+      [
+        'clone',
+        'https://github.com/Geekyants/flutter-starter.git',
+        '--branch',
+        'development',
+        '--single-branch',
+        path
+      ],
       path: path,
     );
   }
