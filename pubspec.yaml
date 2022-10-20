@@ -1,5 +1,5 @@
 name: flutter_starter_cli
-description: Flutter Starter CLI
+description: A command line tool that provides ease of setting up a Flutter project.
 version: 0.0.1-dev.1
 
 homepage: https://flutter-starter.geekyants.com
