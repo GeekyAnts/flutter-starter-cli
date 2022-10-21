@@ -23,6 +23,12 @@ class CreateCommand extends Command<int> {
         defaultsTo: 'com.example',
       )
       ..addOption(
+        'state',
+        abbr: 's',
+        help: 'The state management for the project.',
+        allowed: [StateManagement.bloc.name, StateManagement.riverpod.name],
+      )
+      ..addOption(
         'api',
         abbr: 'a',
         help: 'The API service for the project.',
@@ -58,13 +64,15 @@ class CreateCommand extends Command<int> {
     final name = _name;
     final desc = _desc;
     final org = _org;
+    final state = _state;
     final api = _api;
-    final test = _test;
+    final test = state == StateManagement.bloc.name ? _test : true;
     final git = _git;
     final path = '${Directory.current.path}/$name';
     final target = Directory(path);
     if (!target.existsSync()) await target.create();
-    await onGenerateComplete(_logger, path, name, desc, org, api, test, git);
+    await onGenerateComplete(
+        _logger, path, name, desc, org, state, api, test, git);
     _logger.success('Your Project is Ready to Use 🚀');
     return ExitCode.success.code;
   }
@@ -78,6 +86,15 @@ class CreateCommand extends Command<int> {
       );
     }
     return args.first;
+  }
+
+  String get _state {
+    return argResults?['state'] ??
+        _logger.chooseOne(
+          'Select the State Management',
+          choices: [StateManagement.bloc.name, StateManagement.riverpod.name],
+          defaultValue: StateManagement.bloc.name,
+        );
   }
 
   String get _api {
@@ -121,9 +138,18 @@ class CreateCommand extends Command<int> {
         );
   }
 
-  Future<void> onGenerateComplete(Logger logger, String path, String name,
-      String desc, String org, String api, bool test, bool git) async {
-    await Actions.createProject(path);
+  Future<void> onGenerateComplete(
+    Logger logger,
+    String path,
+    String name,
+    String desc,
+    String org,
+    String state,
+    String api,
+    bool test,
+    bool git,
+  ) async {
+    await Actions.createProject(path, state);
     await Actions.generateFiles(path, name, desc, org, api, test);
     await Actions.setupPackages(path, api, test);
     await Actions.getPackages(path);

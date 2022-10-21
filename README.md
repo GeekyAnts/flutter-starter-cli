@@ -12,7 +12,7 @@ Out of the box, `Flutter Starter CLI` includes:-
 
 - ✅ **State Management**
   - BLoC - BLoC is a popular design/architectural pattern that is used to separate the logic from the UI.
-  - Riverpod - (Coming Soon... 🥳)
+  - RiverPod - A state-management library that catches programming errors at compile time and ensures that the code is testable.
 - ✅ **API-Services**
   - Dio - A powerful HTTP client for Dart, which supports Interceptors, Global configuration, FormData, Request Cancellation, File downloading, Timeout etc.
   - Http - A composable, Future-based library for making HTTP requests.
@@ -32,7 +32,7 @@ Currently, the `Flutter Starter CLI` depends on the following packages:-
 | Package       | Version | Description                                                                                                                  |
 | ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | args          | 2.3.1   | Parses raw command-line arguments into a set of options and values.                                                          |
-| mason_logger  | 0.1.3   | Simple logging library for CLI requests.                                                                                     |
+| mason_logger  | 0.2.1   | Simple logging library for CLI requests.                                                                                     |
 | path          | 1.8.2   | The path package provides common operations for manipulating paths: joining, splitting, normalizing, etc.                    |
 | pub_updater   | 0.2.1   | A Dart package which enables checking whether packages are up to date and supports updating them.                            |
 | flutter_lints | 2.0.1   | This package contains a recommended set of lints for Flutter apps, packages, and plugins to encourage good coding practices. |
@@ -67,16 +67,11 @@ $ flutter_starter_cli create
 ```
 
 ```sh
-# Shorthand to create project with git
-$ flutter_starter_cli create <project_name> --api=<api_service> -g
-
-# Shorthand to create project with test
-$ flutter_starter_cli create <project_name> --api=<api_service> -t
-
-# Shorthand to create project without git and test
-$ flutter_starter_cli create <project_name> --api=<api_service>
+# Shorthand to create project
+$ flutter_starter_cli create <project_name> --state=<state_management> --api=<api_service> -g -t
 
 # Available API services (dio, http)
+# Available State management (bloc, riverpod)
 ```
 
 ## Complete Usage
@@ -93,6 +88,8 @@ Usage: flutter_starter_cli create <project_name>
                    (defaults to "A New Flutter Project.")
     --org          The organization for the project.
                    (defaults to "com.example")
+-s, --state        The state management for the project.
+                   [bloc, riverpod]
 -a, --api          The API service for the project.
                    [dio, http]
 -t, --[no-]test    Setup Test Cases.
