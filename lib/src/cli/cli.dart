@@ -17,14 +17,18 @@ class Cli {
     return result;
   }
 
-  static Future<void> cloneProject(String path) async {
+  static _delete(Directory target) async {
+    await target.delete(recursive: true);
+  }
+
+  static Future<void> cloneProject(String path, String state) async {
     await _run(
       'git',
       [
         'clone',
         'https://github.com/Geekyants/flutter-starter.git',
         '--branch',
-        'development',
+        state,
         '--single-branch',
         path
       ],
@@ -35,23 +39,23 @@ class Cli {
   static Future<void> removeFiles(String path, String api, bool test) async {
     Directory target;
     target = Directory(join(path, '.git'));
-    await target.delete(recursive: true);
+    await _delete(target);
     if (api == 'dio') {
       target = Directory(join(path, 'lib', 'api_sdk', 'http'));
-      await target.delete(recursive: true);
+      await _delete(target);
       target = Directory(join(path, 'lib', 'api_sdk', 'http_api_sdk.dart'));
-      await target.delete(recursive: true);
+      await _delete(target);
     } else {
       target = Directory(join(path, 'lib', 'api_sdk', 'dio'));
-      await target.delete(recursive: true);
+      await _delete(target);
       target = Directory(join(path, 'lib', 'api_sdk', 'dio_api_sdk.dart'));
-      await target.delete(recursive: true);
+      await _delete(target);
     }
     if (!test) {
       target = Directory(join(path, 'integration_test'));
-      await target.delete(recursive: true);
+      await _delete(target);
       target = Directory(join(path, 'test'));
-      await target.delete(recursive: true);
+      await _delete(target);
     }
   }
 

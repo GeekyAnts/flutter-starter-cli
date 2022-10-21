@@ -5,6 +5,11 @@ enum APIService {
   http,
 }
 
+enum StateManagement {
+  bloc,
+  riverpod,
+}
+
 class Status {
   static late Progress progress;
   static late Logger logger;

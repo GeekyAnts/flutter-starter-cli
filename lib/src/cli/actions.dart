@@ -4,10 +4,10 @@ import 'package:flutter_starter_cli/src/cli/cli.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
 
 class Actions {
-  static Future<void> createProject(String path) async {
+  static Future<void> createProject(String path, String state) async {
     Status.start('Project Creating...');
     try {
-      await Cli.cloneProject(path);
+      await Cli.cloneProject(path, state);
       Status.complete('Project Created!!!');
     } catch (_) {
       Status.fail('Project Creation Failed!!!');
@@ -39,6 +39,7 @@ class Actions {
           final contents = await file.readAsString();
           file = await file.writeAsString(contents
               .replaceAll('flutter_starter', name)
+              .replaceAll('Flutter Starter', name)
               .replaceAll('A new Flutter project.', desc)
               .replaceAll('com.example', org)
               .replaceAll(
