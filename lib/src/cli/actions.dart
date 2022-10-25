@@ -80,4 +80,14 @@ class Actions {
       }
     }
   }
+
+  static Future<void> upgradeProject(String path, bool major) async {
+    Status.start('Upgrading Project...');
+    try {
+      await Cli.upgradeProject(path, major);
+      Status.complete('Project Upgraded!!!');
+    } catch (_) {
+      Status.fail('Project Upgrade Failed.');
+    }
+  }
 }

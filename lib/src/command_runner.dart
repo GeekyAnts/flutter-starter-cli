@@ -4,6 +4,7 @@ import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
 
 import 'package:flutter_starter_cli/src/commands/commands.dart';
+import 'package:flutter_starter_cli/src/commands/subcommands/subcommands.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
 import 'package:flutter_starter_cli/src/version.dart';
 
@@ -32,6 +33,7 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
 
     addCommand(CreateCommand(logger: _logger));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
+    addCommand(ProjectCommand()..addSubcommand(ProjectUpgradeSubcommand()));
   }
 
   final Logger _logger;
