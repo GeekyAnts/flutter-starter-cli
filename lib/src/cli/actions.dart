@@ -4,6 +4,12 @@ import 'package:flutter_starter_cli/src/cli/cli.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
 
 class Actions {
+  static Future<void> _addStep(message) async {
+    Status.start('Adding $message...');
+    await Future.delayed(const Duration(seconds: 1));
+    Status.complete('$message Added!!!');
+  }
+
   static Future<void> createProject(String path, String state) async {
     Status.start('Project Creating...');
     try {
@@ -47,6 +53,12 @@ class Actions {
         } catch (_) {}
       }),
     );
+    await _addStep('State Management');
+    await _addStep('API Service');
+    await _addStep('Localization');
+    await _addStep('Routes');
+    await _addStep('Themes');
+    if (test) await _addStep('Test Cases');
   }
 
   static Future<void> setupPackages(String path, String api, bool test) async {
