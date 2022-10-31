@@ -2,6 +2,7 @@ import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
 import 'package:pub_updater/pub_updater.dart';
+import 'package:usage/usage_io.dart';
 
 import 'package:flutter_starter_cli/src/commands/commands.dart';
 import 'package:flutter_starter_cli/src/utils.dart';
@@ -13,9 +14,13 @@ const description = 'Flutter Starter CLI';
 
 class FlutterStarterCliCommandRunner extends CommandRunner<int> {
   FlutterStarterCliCommandRunner({
+    Analytics? analytics,
     Logger? logger,
     PubUpdater? pubUpdater,
-  })  : _logger = logger ?? Logger(),
+  })  : _analytics = analytics ??
+            AnalyticsIO(
+                'UA-247689372-1', 'flutter_starter_cli', packageVersion),
+        _logger = logger ?? Logger(),
         _pubUpdater = pubUpdater ?? PubUpdater(),
         super(executableName, description) {
     argParser
@@ -30,16 +35,18 @@ class FlutterStarterCliCommandRunner extends CommandRunner<int> {
         help: 'Noisy logging, including all shell commands executed.',
       );
 
-    addCommand(CreateCommand(logger: _logger));
+    addCommand(CreateCommand(logger: _logger, analytics: _analytics));
     addCommand(UpdateCommand(logger: _logger, pubUpdater: _pubUpdater));
   }
 
+  final Analytics _analytics;
   final Logger _logger;
   final PubUpdater _pubUpdater;
 
   @override
   Future<int> run(Iterable<String> args) async {
     Status.init(_logger);
+    _analytics.enabled = true;
     try {
       final topLevelResults = parse(args);
       if (topLevelResults['verbose'] == true) {

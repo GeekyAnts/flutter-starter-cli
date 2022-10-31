@@ -13,6 +13,7 @@ dependencies:
   mason_logger: ^0.2.1
   path: ^1.8.2
   pub_updater: ^0.2.1
+  usage: ^4.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1

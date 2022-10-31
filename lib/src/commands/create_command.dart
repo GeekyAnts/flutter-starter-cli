@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:usage/usage_io.dart';
 
 import 'package:flutter_starter_cli/src/cli/actions.dart';
 import 'package:flutter_starter_cli/src/command_runner.dart';
@@ -9,8 +11,10 @@ import 'package:flutter_starter_cli/src/utils.dart';
 
 class CreateCommand extends Command<int> {
   CreateCommand({
+    required Analytics analytics,
     required Logger logger,
-  }) : _logger = logger {
+  })  : _analytics = analytics,
+        _logger = logger {
     argParser
       ..addOption(
         'desc',
@@ -48,6 +52,7 @@ class CreateCommand extends Command<int> {
       );
   }
 
+  final Analytics _analytics;
   final Logger _logger;
 
   @override
@@ -74,6 +79,11 @@ class CreateCommand extends Command<int> {
     await onGenerateComplete(
         _logger, path, name, desc, org, state, api, test, git);
     _logger.success('Your Project is Ready to Use 🚀');
+
+    unawaited(_analytics.sendEvent(this.name, description,
+        parameters: {'api': api, 'state': state}));
+    await _analytics.waitForLastPing(timeout: const Duration(seconds: 1));
+
     return ExitCode.success.code;
   }
 
