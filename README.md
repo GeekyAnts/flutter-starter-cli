@@ -32,9 +32,9 @@ Currently, the `Flutter Starter CLI` depends on the following packages:-
 | Package       | Version | Description                                                                                                                  |
 | ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | args          | 2.3.1   | Parses raw command-line arguments into a set of options and values.                                                          |
-| mason_logger  | 0.2.1   | Simple logging library for CLI requests.                                                                                     |
+| mason_logger  | 0.2.2   | Simple logging library for CLI requests.                                                                                     |
 | path          | 1.8.2   | The path package provides common operations for manipulating paths: joining, splitting, normalizing, etc.                    |
-| pub_updater   | 0.2.1   | A Dart package which enables checking whether packages are up to date and supports updating them.                            |
+| pub_updater   | 0.2.2   | A Dart package which enables checking whether packages are up to date and supports updating them.                            |
 | flutter_lints | 2.0.1   | This package contains a recommended set of lints for Flutter apps, packages, and plugins to encourage good coding practices. |
 
 ## Getting Started
@@ -74,6 +74,11 @@ $ flutter_starter_cli create <project_name> --state=<state_management> --api=<ap
 # Available State management (bloc, riverpod)
 ```
 
+```sh
+# To upgrade project
+$ flutter_starter_cli project upgrade
+```
+
 ## Complete Usage
 
 The complete usage of the create command with options and flags.
@@ -88,6 +93,7 @@ Usage: flutter_starter_cli create <project_name>
                    (defaults to "A New Flutter Project.")
     --org          The organization for the project.
                    (defaults to "com.example")
+-p, --path         The directory path for the project.
 -s, --state        The state management for the project.
                    [bloc, riverpod]
 -a, --api          The API service for the project.
