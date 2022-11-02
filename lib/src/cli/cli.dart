@@ -97,4 +97,12 @@ class Cli {
       path: path,
     );
   }
+
+  static Future<void> upgradeProject(String path, bool major) async {
+    await _run(
+      'flutter',
+      ['pub', 'upgrade', major ? '--major-versions' : ''],
+      path: path,
+    );
+  }
 }
