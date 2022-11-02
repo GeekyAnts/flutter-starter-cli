@@ -17,8 +17,8 @@ class Cli {
     return result;
   }
 
-  static _delete(Directory target) {
-    target.deleteSync(recursive: true);
+  static _delete(Directory target, [bool isFile = false]) {
+    if (isFile || target.existsSync()) target.deleteSync(recursive: true);
   }
 
   static Future<void> cloneProject(String path, String state) async {
@@ -44,12 +44,12 @@ class Cli {
       target = Directory(join(path, 'lib', 'api_sdk', 'http'));
       await _delete(target);
       target = Directory(join(path, 'lib', 'api_sdk', 'http_api_sdk.dart'));
-      await _delete(target);
+      await _delete(target, true);
     } else {
       target = Directory(join(path, 'lib', 'api_sdk', 'dio'));
       await _delete(target);
       target = Directory(join(path, 'lib', 'api_sdk', 'dio_api_sdk.dart'));
-      await _delete(target);
+      await _delete(target, true);
     }
     if (!test) {
       target = Directory(join(path, 'integration_test'));
