@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:mason_logger/mason_logger.dart';
+import 'package:path/path.dart';
 
 import 'package:flutter_starter_cli/src/cli/actions.dart';
 import 'package:flutter_starter_cli/src/command_runner.dart';
@@ -21,6 +22,11 @@ class CreateCommand extends Command<int> {
         'org',
         help: 'The organization for the project.',
         defaultsTo: 'com.example',
+      )
+      ..addOption(
+        'path',
+        abbr: 'p',
+        help: 'The directory path for the project.',
       )
       ..addOption(
         'state',
@@ -68,12 +74,17 @@ class CreateCommand extends Command<int> {
     final api = _api;
     final test = state == StateManagement.bloc.name ? _test : true;
     final git = _git;
-    final path = '${Directory.current.path}/$name';
+    final dir = _dir(name);
+    final path = join(Directory.current.path, dir);
     final target = Directory(path);
-    if (!target.existsSync()) await target.create();
+    if (!target.existsSync()) target.createSync(recursive: true);
     await onGenerateComplete(
         _logger, path, name, desc, org, state, api, test, git);
-    _logger.success('Your Project is Ready to Use 🚀');
+    _logger.success('''Your Project is Ready to Use 🚀
+Type:-
+  \$ cd $dir
+  \$ flutter run
+In order to run your application.''');
     return ExitCode.success.code;
   }
 
@@ -136,6 +147,10 @@ class CreateCommand extends Command<int> {
           'Initialize Git Repository?',
           defaultValue: false,
         );
+  }
+
+  String _dir(name) {
+    return argResults?['path'] ?? name;
   }
 
   Future<void> onGenerateComplete(

@@ -17,8 +17,8 @@ class Cli {
     return result;
   }
 
-  static _delete(Directory target) async {
-    await target.delete(recursive: true);
+  static _delete(Directory target) {
+    target.deleteSync(recursive: true);
   }
 
   static Future<void> cloneProject(String path, String state) async {
