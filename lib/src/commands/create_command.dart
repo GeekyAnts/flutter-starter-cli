@@ -72,7 +72,7 @@ class CreateCommand extends Command<int> {
     final org = _org;
     final state = _state;
     final api = _api;
-    final test = state == StateManagement.bloc.name ? _test : true;
+    final test = state == StateManagement.bloc.name ? _test : false;
     final git = _git;
     final dir = _dir(name);
     final path = join(Directory.current.path, dir);

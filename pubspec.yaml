@@ -1,6 +1,6 @@
 name: flutter_starter_cli
 description: A command line tool that provides ease of setting up a Flutter project.
-version: 0.0.1-dev.2
+version: 0.0.1-dev.3
 
 homepage: https://flutter-starter.geekyants.com
 repository: https://github.com/GeekyAnts/flutter-starter-cli
@@ -10,9 +10,9 @@ environment:
 
 dependencies:
   args: ^2.3.1
-  mason_logger: ^0.2.1
+  mason_logger: ^0.2.2
   path: ^1.8.2
-  pub_updater: ^0.2.1
+  pub_updater: ^0.2.2
 
 dev_dependencies:
   flutter_lints: ^2.0.1
