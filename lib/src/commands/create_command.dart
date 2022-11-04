@@ -38,7 +38,11 @@ class CreateCommand extends Command<int> {
         'api',
         abbr: 'a',
         help: 'The API service for the project.',
-        allowed: [APIService.dio.name, APIService.http.name],
+        allowed: [
+          APIService.dio.name,
+          APIService.http.name,
+          APIService.graphql.name
+        ],
       )
       ..addFlag(
         'test',
@@ -112,7 +116,11 @@ In order to run your application.''');
     return argResults?['api'] ??
         _logger.chooseOne(
           'Select the API Service',
-          choices: [APIService.dio.name, APIService.http.name],
+          choices: [
+            APIService.dio.name,
+            APIService.http.name,
+            APIService.graphql.name
+          ],
           defaultValue: APIService.dio.name,
         );
   }

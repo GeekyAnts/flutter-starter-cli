@@ -3,6 +3,7 @@ import 'package:mason_logger/mason_logger.dart';
 enum APIService {
   dio,
   http,
+  graphql,
 }
 
 enum StateManagement {

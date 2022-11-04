@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
+import 'package:flutter_starter_cli/src/utils.dart';
+
 class Cli {
   static Future<ProcessResult> _run(
     String cmd,
@@ -17,8 +19,8 @@ class Cli {
     return result;
   }
 
-  static _delete(Directory target, [bool isFile = false]) {
-    if (isFile || target.existsSync()) target.deleteSync(recursive: true);
+  static _delete(target) {
+    if (target.existsSync()) target.deleteSync(recursive: true);
   }
 
   static Future<void> cloneProject(String path, String state) async {
@@ -37,36 +39,63 @@ class Cli {
   }
 
   static Future<void> removeFiles(String path, String api, bool test) async {
-    Directory target;
-    target = Directory(join(path, '.git'));
-    await _delete(target);
-    if (api == 'dio') {
-      target = Directory(join(path, 'lib', 'api_sdk', 'http'));
-      await _delete(target);
-      target = Directory(join(path, 'lib', 'api_sdk', 'http_api_sdk.dart'));
-      await _delete(target, true);
-    } else {
-      target = Directory(join(path, 'lib', 'api_sdk', 'dio'));
-      await _delete(target);
-      target = Directory(join(path, 'lib', 'api_sdk', 'dio_api_sdk.dart'));
-      await _delete(target, true);
+    File file;
+    Directory folder;
+    folder = Directory(join(path, '.git'));
+    await _delete(folder);
+    final String apiSdk = join(path, 'lib', 'api_sdk');
+    if (api == APIService.dio.name) {
+      folder = Directory(join(apiSdk, 'http'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'http_api_sdk.dart'));
+      await _delete(file);
+      folder = Directory(join(apiSdk, 'graphql'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'graphql_api_sdk.dart'));
+      await _delete(file);
+    } else if (api == APIService.http.name) {
+      folder = Directory(join(apiSdk, 'dio'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'dio_api_sdk.dart'));
+      await _delete(file);
+      folder = Directory(join(apiSdk, 'graphql'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'graphql_api_sdk.dart'));
+      await _delete(file);
+    } else if (api == APIService.graphql.name) {
+      folder = Directory(join(apiSdk, 'http'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'http_api_sdk.dart'));
+      await _delete(file);
+      folder = Directory(join(apiSdk, 'dio'));
+      await _delete(folder);
+      file = File(join(apiSdk, 'dio_api_sdk.dart'));
+      await _delete(file);
     }
     if (!test) {
-      target = Directory(join(path, 'integration_test'));
-      await _delete(target);
-      target = Directory(join(path, 'test'));
-      await _delete(target);
+      folder = Directory(join(path, 'integration_test'));
+      await _delete(folder);
+      folder = Directory(join(path, 'test'));
+      await _delete(folder);
     }
   }
 
   static Future<void> removePackages(String path, String api, bool test) async {
     var args = [];
-    if (api == 'dio') {
+    if (api == APIService.dio.name) {
       args
         ..add('http')
-        ..add('http_interceptor');
-    } else {
+        ..add('http_interceptor')
+        ..add('graphql_flutter');
+    } else if (api == APIService.http.name) {
       args
+        ..add('dio')
+        ..add('retrofit')
+        ..add('graphql_flutter');
+    } else if (api == APIService.graphql.name) {
+      args
+        ..add('http')
+        ..add('http_interceptor')
         ..add('dio')
         ..add('retrofit');
     }
