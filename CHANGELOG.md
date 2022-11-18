@@ -1,3 +1,7 @@
+# 0.0.1-dev.4
+
+- Added graphql api service.
+
 # 0.0.1-dev.3
 
 - Added project upgrade command.

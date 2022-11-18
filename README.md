@@ -16,6 +16,7 @@ Out of the box, `Flutter Starter CLI` includes:-
 - ✅ **API-Services**
   - Dio - A powerful HTTP client for Dart, which supports Interceptors, Global configuration, FormData, Request Cancellation, File downloading, Timeout etc.
   - Http - A composable, Future-based library for making HTTP requests.
+  - Graphql - A standalone GraphQL client for Flutter, bringing all the features from a modern GraphQL client to one easy to use package.
 - ✅ **Basic Setup**
   - Themes - Themes are used to share colors and font styles throughout an app.
   - Localization - The project provides support for multiple languages like English, Spanish and French.
@@ -70,7 +71,7 @@ $ flutter_starter_cli create
 # Shorthand to create project
 $ flutter_starter_cli create <project_name> --state=<state_management> --api=<api_service> -g -t
 
-# Available API services (dio, http)
+# Available API services (dio, http, graphql)
 # Available State management (bloc, riverpod)
 ```
 
@@ -97,7 +98,7 @@ Usage: flutter_starter_cli create <project_name>
 -s, --state        The state management for the project.
                    [bloc, riverpod]
 -a, --api          The API service for the project.
-                   [dio, http]
+                   [dio, http, graphql]
 -t, --[no-]test    Setup Test Cases.
 -g, --[no-]git     Initialize Git Repository.
 
@@ -144,4 +145,4 @@ The complete structure of the newly created project directory looks like this:
 
 A demo video to illustrate how to use the `Flutter_Starter_CLI`
 
-![demo](flutter-starter-cli.gif)
+![demo](./flutter-starter-cli.gif)
