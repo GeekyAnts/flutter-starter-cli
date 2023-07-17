@@ -1,92 +1,148 @@
-# flutter-starter-cli
+# Flutter Starter CLI
 
+The `Flutter Starter CLI` is a very useful tool that provides commands for the ease of setting up a Flutter project from scratch.
 
+## Introduction
 
-## Getting started
+`Flutter Starter CLI` is written in the Dart programming language.\
+While working with the Flutter projects we have to write the same repetitive code multiple times but using this CLI, we can create a Flutter template on the fly.\
+Also, the basic structure of all the tests in Flutter is the same. So this CLI also provides a basic starter pack for the Flutter test as well.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Out of the box, `Flutter Starter CLI` includes:-
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- ✅ **State Management**
+  - BLoC - BLoC is a popular design/architectural pattern that is used to separate the logic from the UI.
+  - RiverPod - A state-management library that catches programming errors at compile time and ensures that the code is testable.
+- ✅ **API-Services**
+  - Dio - A powerful HTTP client for Dart, which supports Interceptors, Global configuration, FormData, Request Cancellation, File downloading, Timeout etc.
+  - Http - A composable, Future-based library for making HTTP requests.
+  - Graphql - A standalone GraphQL client for Flutter, bringing all the features from a modern GraphQL client to one easy to use package.
+- ✅ **Basic Setup**
+  - Themes - Themes are used to share colors and font styles throughout an app.
+  - Localization - The project provides support for multiple languages like English, Spanish and French.
+  - Routing - Go_Router is used to provide a convenient, URL-based API for navigating between different screens.
+- ✅ **Testing**
+  - Unit - A unit test tests a single function, method, or class.
+  - Widget - A widget test tests a single widget.
+  - Integration - An integration test tests a complete app or a large part of an app.
 
-## Add your files
+## Dependencies
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Currently, the `Flutter Starter CLI` depends on the following packages:-
 
+| Package       | Version | Description                                                                                                                  |
+| ------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| args          | 2.3.1   | Parses raw command-line arguments into a set of options and values.                                                          |
+| mason_logger  | 0.2.2   | Simple logging library for CLI requests.                                                                                     |
+| path          | 1.8.2   | The path package provides common operations for manipulating paths: joining, splitting, normalizing, etc.                    |
+| pub_updater   | 0.2.2   | A Dart package which enables checking whether packages are up to date and supports updating them.                            |
+| flutter_lints | 2.0.1   | This package contains a recommended set of lints for Flutter apps, packages, and plugins to encourage good coding practices. |
+
+## Getting Started
+
+Activate globally via:
+
+```sh
+dart pub global activate flutter_starter_cli
 ```
-cd existing_repo
-git remote add origin https://git.geekyants.com/ruchika/flutter-starter-cli.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.geekyants.com/ruchika/flutter-starter-cli/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+In the root of your application, run the following commands:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```sh
+# Show CLI version
+$ flutter_starter_cli --version
+```
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```sh
+# Show usage help
+$ flutter_starter_cli --help
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+```sh
+# To create project
+$ flutter_starter_cli create
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+# Then follow instructions
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```sh
+# Shorthand to create project
+$ flutter_starter_cli create <project_name> --state=<state_management> --api=<api_service> -g -t
 
-## License
-For open source projects, say how it is licensed.
+# Available API services (dio, http, graphql)
+# Available State management (bloc, riverpod)
+```
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```sh
+# To upgrade project
+$ flutter_starter_cli project upgrade
+```
+
+## Complete Usage
+
+The complete usage of the create command with options and flags.
+
+```sh
+➜  ~ flutter_starter_cli create
+Creates a new flutter starter project.
+
+Usage: flutter_starter_cli create <project_name>
+-h, --help         Print this usage information.
+    --desc         The description for the project.
+                   (defaults to "A New Flutter Project.")
+    --org          The organization for the project.
+                   (defaults to "com.example")
+-p, --path         The directory path for the project.
+-s, --state        The state management for the project.
+                   [bloc, riverpod]
+-a, --api          The API service for the project.
+                   [dio, http, graphql]
+-t, --[no-]test    Setup Test Cases.
+-g, --[no-]git     Initialize Git Repository.
+
+Run "flutter_starter_cli help" to see global options.
+```
+
+## Directory Structure
+
+The complete structure of the newly created project directory looks like this:
+
+```
+.
+├── android
+├── assets
+├── integration_test
+├── ios
+└── lib
+    ├── api_sdk
+    ├── config
+    ├── l10n
+    ├── routes
+    ├── screens
+    ├── shared
+    ├── themes
+    ├── utils
+    ├── widgets
+    ├── app.dart
+    ├── common_export.dart
+    ├── main.dart
+├── linux
+├── macos
+├── test
+├── web
+├── windows
+├── .gitignore
+├── analysis_options.yaml
+├── l10n.yaml
+├── pubspec.lock
+├── pubspec.yaml
+└── README.md
+```
+
+## Demo
+
+A demo video to illustrate how to use the `Flutter_Starter_CLI`
+
+![demo](./flutter-starter-cli.gif)
